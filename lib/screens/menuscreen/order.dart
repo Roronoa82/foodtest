@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_application_1/models/food_model.dart';
-import 'package:flutter_svg/flutter_svg.dart';
-import 'package:google_fonts/google_fonts.dart';
+import 'package:flutter_application_1/models/menu_item.dart';
 
 class OrderSummary extends StatelessWidget {
   final List<Food> selectedFoodItems;
@@ -56,12 +54,12 @@ class OrderSummary extends StatelessWidget {
             child: SizedBox(
               height: padding * 0.12,
               width: padding * 0.12,
-              child: ClipOval(
+              //child: ClipOval(
                 child: Image.asset(
-                  'assets/image/flag_usa.png',
+                  'assets/image/usaflag.png',
                   fit: BoxFit.cover,
                 ),
-              ),
+            //  ),
             ),
           ),
           SizedBox(height: padding * 0.1),
@@ -70,17 +68,18 @@ class OrderSummary extends StatelessWidget {
             children: [
               Text(
                 'My Order',
-                style: GoogleFonts.roboto(
+                style: TextStyle(
+                                fontFamily: 'Roboto',
                   fontWeight: FontWeight.bold,
                   fontSize: fontSize * 1.2,
                 ),
               ),
               SizedBox(width: padding * 0.03),
               Flexible(
-                child: SvgPicture.asset(
-                  'assets/svg/edit.svg',
-                  height: fontSize,
-                  width: fontSize,
+                child: Icon(
+                  Icons.edit_square,
+                  weight: fontSize,
+                  size: fontSize,
                 ),
               ),
             ],
@@ -97,8 +96,9 @@ class OrderSummary extends StatelessWidget {
         alignment: Alignment.topCenter,
         child: Text(
           'No order selected',
-          style: GoogleFonts.roboto(
-            fontWeight: FontWeight.w300,
+          style: TextStyle(
+            fontFamily: 'Roboto',
+            fontWeight: FontWeight.w400,
             color: Colors.grey,
             fontSize: fontSize * 0.85,
           ),
@@ -131,7 +131,8 @@ class OrderSummary extends StatelessWidget {
                   children: [
                     Text(
                       'x${quantity.toString()} ${foodItem.foodName}',
-                      style: GoogleFonts.roboto(
+                      style:TextStyle(
+                            fontFamily: 'Roboto',
                         fontWeight: FontWeight.bold,
                         fontSize: fontSize * 0.7,
                         decoration: TextDecoration.underline,
@@ -143,7 +144,8 @@ class OrderSummary extends StatelessWidget {
                         foodItem.foodDesc!.isNotEmpty)
                       Text(
                         foodItem.foodDesc!,
-                        style: GoogleFonts.roboto(
+                        style: TextStyle(
+                            fontFamily: 'Roboto',
                           fontSize: fontSize * 0.6,
                           color: Colors.grey,
                         ),
@@ -156,7 +158,8 @@ class OrderSummary extends StatelessWidget {
                       children: [
                         Text(
                           '\$${((foodItem.foodPrice ?? 0.0) * quantity).toStringAsFixed(2)}',
-                          style: GoogleFonts.roboto(
+                          style: TextStyle(
+                            fontFamily: 'Roboto',
                             fontWeight: FontWeight.bold,
                             fontSize: fontSize * 0.7,
                             color: const Color(0xFF7B61FF),
@@ -196,7 +199,8 @@ class OrderSummary extends StatelessWidget {
           ),
           Text(
             quantity.toString().padLeft(2, '0'),
-            style: GoogleFonts.roboto(
+            style: TextStyle(
+                            fontFamily: 'Roboto',
                 fontSize: fontSize * 0.6, color: Colors.black),
           ),
           GestureDetector(
@@ -240,7 +244,8 @@ class OrderSummary extends StatelessWidget {
               children: [
                 Text(
                   'Subtotal',
-                  style: GoogleFonts.workSans(
+                  style: TextStyle(
+                            fontFamily: 'Roboto',
                     fontWeight: FontWeight.w500,
                     fontSize: fontSize,
                   ),
@@ -249,7 +254,8 @@ class OrderSummary extends StatelessWidget {
                   countOrder != 0
                       ? '\$${subtotal.toStringAsFixed(2)}'
                       : '\$0.00',
-                  style: GoogleFonts.workSans(
+                  style: TextStyle(
+                            fontFamily: 'Roboto',
                     fontWeight: FontWeight.w500,
                     fontSize: fontSize,
                     color: countOrder != 0
@@ -273,14 +279,15 @@ class OrderSummary extends StatelessWidget {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
-                SvgPicture.asset(
-                  'assets/svg/shopping.svg',
-                  height: fontSize * 1.2,
-                  width: fontSize * 1.2,
+                Icon(
+                  Icons.shopping_cart_outlined,
+                  weight: fontSize * 1.2,
+                  size: fontSize * 1.2,
                 ),
                 Text(
                   'Confirm Order',
-                  style: GoogleFonts.roboto(
+                  style: TextStyle(
+                                fontFamily: 'Roboto',
                     fontWeight: FontWeight.w400,
                     fontSize: fontSize * 0.8,
                     color: Colors.white,
@@ -288,7 +295,8 @@ class OrderSummary extends StatelessWidget {
                 ),
                 Text(
                   '($countOrder)',
-                  style: GoogleFonts.workSans(
+                  style:  TextStyle(
+                                fontFamily: 'Roboto',
                     fontWeight: FontWeight.w400,
                     fontSize: fontSize * 0.8,
                     color: Colors.white,

@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
 
-import '../../models/food_model.dart';
+import '../../models/menu_item.dart';
 
 class SearchResultsGrid extends StatelessWidget {
-  final Map<String, List<Food>> groupedFood2;
+  final Map<String, List<Food>> foodCategories ;
   final List<Food> filteredFoodList;
   final Function(Food) onFoodSelected;
 
@@ -13,13 +12,13 @@ class SearchResultsGrid extends StatelessWidget {
     super.key,
     required this.filteredFoodList,
     required this.onFoodSelected,
-    required this.groupedFood2,
+    required this.foodCategories ,
   });
 
   List<String> getFilteredCategories() {
     List<String> filteredCategories = [];
-    for (var category in groupedFood2.keys) {
-      if (groupedFood2[category]!
+    for (var category in foodCategories.keys) {
+      if (foodCategories[category]!
           .any((food) => filteredFoodList.contains(food))) {
         filteredCategories.add(category);
       }
@@ -31,8 +30,8 @@ class SearchResultsGrid extends StatelessWidget {
   Widget build(BuildContext context) {
     double screenHeight = MediaQuery.of(context).size.height;
     double screenWidth = MediaQuery.of(context).size.width;
-    double plusscreen = (screenHeight + screenWidth) * 0.1;
-    double fontz = plusscreen * 0.1;
+    double totalSize = (screenHeight + screenWidth) * 0.1;
+    double fontScale = totalSize * 0.1;
 
     if (filteredFoodList.isEmpty) {
       return Center(child: Container());
@@ -46,29 +45,30 @@ class SearchResultsGrid extends StatelessWidget {
             itemCount: filteredCategories.length,
             itemBuilder: (context, index) {
               final foodCatName = filteredCategories[index];
-              final foodItems = groupedFood2[foodCatName]!
+              final foodItems = foodCategories[foodCatName]!
                   .where((food) => filteredFoodList.contains(food))
                   .toList();
 
               return Padding(
                 padding: EdgeInsets.symmetric(
-                    horizontal: plusscreen * 0.05, vertical: plusscreen * 0.15),
+                    horizontal: totalSize * 0.05, vertical: totalSize * 0.15),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Padding(
                       padding:
-                          EdgeInsets.symmetric(horizontal: plusscreen * 0.15),
+                          EdgeInsets.symmetric(horizontal: totalSize * 0.15),
                       child: Text(
                         foodCatName,
-                        style: GoogleFonts.roboto(
-                          fontSize: plusscreen * 0.13,
+                        style: TextStyle(
+                                fontFamily: 'Roboto',
+                          fontSize: totalSize * 0.13,
                           fontWeight: FontWeight.w500,
                         ),
                       ),
                     ),
                     SizedBox(
-                      height: plusscreen * 0.05,
+                      height: totalSize * 0.05,
                     ),
                     GridView.builder(
                       shrinkWrap: true,
@@ -76,19 +76,19 @@ class SearchResultsGrid extends StatelessWidget {
                         crossAxisCount:
                             orientation == Orientation.landscape ? 4 : 2,
                         childAspectRatio: (orientation == Orientation.landscape
-                                ? plusscreen * 0.5
-                                : plusscreen * 0.5) /
+                                ? totalSize * 0.5
+                                : totalSize * 0.5) /
                             (orientation == Orientation.landscape
-                                ? plusscreen * 0.5
-                                : plusscreen * 0.5),
+                                ? totalSize * 0.5
+                                : totalSize * 0.5),
                       ),
                       itemCount: foodItems.length,
                       itemBuilder: (context, index) {
                         final foodItem = foodItems[index];
                         return Container(
                           margin: EdgeInsets.symmetric(
-                              horizontal: plusscreen * 0.03,
-                              vertical: plusscreen * 0.03),
+                              horizontal: totalSize * 0.03,
+                              vertical: totalSize * 0.03),
                           child: GestureDetector(
                             onTap: () => onFoodSelected(foodItem),
                             child: Stack(children: [
@@ -97,9 +97,9 @@ class SearchResultsGrid extends StatelessWidget {
                                 right: 0,
                                 child: Container(
                                   height: orientation == Orientation.landscape
-                                      ? plusscreen * 0.7
-                                      : plusscreen * 1,
-                                  width: plusscreen * 0.5,
+                                      ? totalSize * 0.7
+                                      : totalSize * 1,
+                                  width: totalSize * 0.5,
                                   decoration: BoxDecoration(
                                     color: Colors.white,
                                     borderRadius: BorderRadius.circular(5),
@@ -112,9 +112,9 @@ class SearchResultsGrid extends StatelessWidget {
                                 top: 0,
                                 child: Container(
                                   height: orientation == Orientation.landscape
-                                      ? plusscreen * 0.7
-                                      : plusscreen * 0.7,
-                                  width: plusscreen * 0.5,
+                                      ? totalSize * 0.7
+                                      : totalSize * 0.7,
+                                  width: totalSize * 0.5,
                                   decoration: BoxDecoration(
                                     borderRadius: const BorderRadius.vertical(
                                       top: Radius.circular(5),
@@ -128,7 +128,7 @@ class SearchResultsGrid extends StatelessWidget {
                                           )
                                         : const DecorationImage(
                                             image: AssetImage(
-                                                'assets/image/noimage2.jpg'),
+                                                'assets/image/outofstock.jpg'),
                                             fit: BoxFit.cover,
                                           ),
                                   ),
@@ -144,8 +144,8 @@ class SearchResultsGrid extends StatelessWidget {
                                     child: Container(
                                       height:
                                           orientation == Orientation.landscape
-                                              ? plusscreen * 0.7
-                                              : plusscreen * 0.7,
+                                              ? totalSize * 0.7
+                                              : totalSize * 0.7,
                                       decoration: BoxDecoration(
                                         borderRadius:
                                             const BorderRadius.vertical(
@@ -156,8 +156,9 @@ class SearchResultsGrid extends StatelessWidget {
                                       child: Center(
                                         child: Text(
                                           'Out of Stock',
-                                          style: GoogleFonts.roboto(
-                                            fontSize: fontz * 1.3,
+                                          style: TextStyle(
+                                fontFamily: 'Roboto',
+                                            fontSize: fontScale * 1.3,
                                             fontWeight: FontWeight.w500,
                                           ),
                                         ),
@@ -171,8 +172,8 @@ class SearchResultsGrid extends StatelessWidget {
                                   bottom: 0,
                                   child: Container(
                                     padding: EdgeInsets.symmetric(
-                                        vertical: plusscreen * 0.03,
-                                        horizontal: plusscreen * 0.06),
+                                        vertical: totalSize * 0.03,
+                                        horizontal: totalSize * 0.06),
                                     decoration: const BoxDecoration(
                                       color: Colors.white,
                                       borderRadius: BorderRadius.vertical(
@@ -186,27 +187,29 @@ class SearchResultsGrid extends StatelessWidget {
                                         ),
                                       ],
                                     ),
-                                    height: plusscreen * 0.5,
-                                    width: plusscreen * 0.5,
+                                    height: totalSize * 0.5,
+                                    width: totalSize * 0.5,
                                     child: Stack(children: [
                                       Positioned(
                                         top: 0,
                                         child: Text(
-                                          foodItem.foodName ?? 'No Name',
-                                          style: GoogleFonts.roboto(
+                                          foodItem.foodName ?? '',
+                                          style: TextStyle(
+                                fontFamily: 'Roboto',
                                             color: Colors.black,
-                                            fontSize: fontz * 0.6,
+                                            fontSize: fontScale * 0.6,
                                             fontWeight: FontWeight.w500,
                                           ),
                                         ),
                                       ),
                                       Positioned(
-                                        top: plusscreen * 0.1,
+                                        top: totalSize * 0.1,
                                         child: Text(
                                           foodItem.foodDesc!,
-                                          style: GoogleFonts.roboto(
+                                          style: TextStyle(
+                                fontFamily: 'Roboto',
                                             color: Colors.grey,
-                                            fontSize: fontz * 0.5,
+                                            fontSize: fontScale * 0.5,
                                           ),
                                         ),
                                       ),
@@ -216,8 +219,9 @@ class SearchResultsGrid extends StatelessWidget {
                                         child: Text(
                                           foodItem.isOutStock == false
                                               ? '\$${foodItem.foodPrice.toString()}'
-                                              : 'Sold Out',
-                                          style: GoogleFonts.roboto(
+                                              : 'Out of stock',
+                                          style: TextStyle(
+                                fontFamily: 'Roboto',
                                             color: foodItem.isOutStock == false
                                                 ? Colors.black
                                                 : Colors.red,
@@ -233,7 +237,7 @@ class SearchResultsGrid extends StatelessWidget {
                                                 foodItem.isOutStock == false
                                                     ? Colors.transparent
                                                     : Colors.red,
-                                            fontSize: fontz * 0.6,
+                                            fontSize: fontScale * 0.6,
                                             fontWeight: FontWeight.bold,
                                           ),
                                         ),

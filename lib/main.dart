@@ -1,14 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_application_1/injection.dart';
-
+import 'package:flutter/services.dart';
 import 'package:flutter_application_1/blocs/menu_bloc.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
-
-import 'check_frist_display.dart';
+import 'blocs/setting_food.dart';
+import 'screens/mainscreen/main_screen.dart';
 
 void main() {
-  configureDependencies();
+  //configureDependencies();
   runApp(const MyApp());
 }
 
@@ -17,10 +16,11 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    SystemChrome.setEnabledSystemUIMode(SystemUiMode.leanBack);
     return MultiBlocProvider(
       providers: [
-        BlocProvider<FoodBloc>(
-          create: (context) => getIt<FoodBloc>()
+        BlocProvider<MenuBloc>(
+          create: (context) => MenuBloc(MenuRepository())
             ..add(const FetchFoodDataEvent(selectedSetId: '', searchQuery: '')),
         ),
       ],
@@ -38,7 +38,7 @@ class MyApp extends StatelessWidget {
                 child: child!,
               );
             },
-            home: const OrientationFirstPage(),
+            home: const SelfServiceScreen(),
           );
         },
       ),

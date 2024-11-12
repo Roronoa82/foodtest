@@ -1,17 +1,17 @@
 part of 'menu_bloc.dart';
 
-abstract class FoodState extends Equatable {
-  const FoodState();
+abstract class MenuState extends Equatable {
+  const MenuState();
 
   @override
   List<Object> get props => [];
 }
 
-class FoodInitial extends FoodState {}
+class FoodInitial extends MenuState {}
 
-class FoodLoading extends FoodState {}
+class FoodLoading extends MenuState {}
 
-class FoodSuccess extends FoodState {
+class FoodSuccess extends MenuState {
   final List<Food> foodList;
   final List<FoodCategory> foodCategoryList;
   final List<FoodSet> foodSetList;
@@ -56,8 +56,7 @@ class FoodSuccess extends FoodState {
         subtotal,
       ];
 }
-
-class FoodError extends FoodState {
+class FoodError extends MenuState {
   final String message;
 
   const FoodError({required this.message});
